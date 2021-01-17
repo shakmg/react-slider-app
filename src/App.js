@@ -3,6 +3,7 @@ import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import data from './data';
 import Article from './Article';
 import Title from './Title';
+import { getPosition } from './helper';
 
 function App() {
   const [people, setPeople] = useState(data);
@@ -30,16 +31,7 @@ function App() {
       <Title />
       <div className="section-center">
         {people.map((person, personIndex) => {
-          let position = 'nextSlide';
-          if (personIndex === index) {
-            position = 'activeSlide';
-          }
-          if (
-            personIndex === index - 1 ||
-            (index === 0 && personIndex === people.length - 1)
-          ) {
-            position = 'lastSlide';
-          }
+          const position = getPosition(index, personIndex, people.length);
           return <Article key={person.id} position={position} {...person} />;
         })}
         <button className="prev" onClick={() => setIndex(index - 1)}>
